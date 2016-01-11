@@ -6,9 +6,9 @@ import messages from '../src/messages';
 
 chai.should();
 
-const assertCrumb = ({name, uri, icon}, expectedName, expectedUri, expectedIcon) => {
+const assertCrumb = ({name, href, icon}, expectedName, expectedHref, expectedIcon) => {
   name.should.equal(expectedName);
-  uri.should.equal(expectedUri);
+  href.should.equal(expectedHref);
 
   if (expectedIcon) {
     if (!icon)
@@ -106,7 +106,7 @@ describe('CrumbBuilder', () => {
 
 describe('createCrumbs', () => {
 
-  it('should create uri', () => {
+  it('should create href', () => {
     const props = {
       routes: [{name: 'test', path: '/store/:storeId/widgets/:widgetId/tags'}],
       params: {storeId: '666', widgetId: '668'}
@@ -116,7 +116,7 @@ describe('createCrumbs', () => {
     crumbs.should.be.an.instanceof(Array);
     crumbs.should.have.length(1);
     const crumb = crumbs[0];
-    crumb.uri.should.equal('/store/666/widgets/668/tags');
+    crumb.href.should.equal('/store/666/widgets/668/tags');
   });
 
   it('should create all crumbs [using route.name]', () => {
@@ -157,11 +157,6 @@ describe('createCrumbs', () => {
     const crumbs = createCrumbs(props);
     crumbs.should.be.an.instanceof(Array);
     crumbs.should.have.length(5);
-
-    const assertCrumb = ({name, uri, icon}, expectedName, expectedUri) => {
-      name.should.equal(expectedName);
-      uri.should.equal(expectedUri);
-    };
 
     assertCrumb(crumbs[0], 'bc-home', '/');
     assertCrumb(crumbs[1], 'bc-inbox', '/inbox');

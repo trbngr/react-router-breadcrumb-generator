@@ -6,7 +6,7 @@ const parameterMatcher = /:(.+)/;
 function makeUri(builder, route) {
   return (route.path || '')
     .split('/')
-    .reduce((uri, part) => `${uri}/${transformRoutePart(builder, part)}`, builder._uri)
+    .reduce((href, part) => `${href}/${transformRoutePart(builder, part)}`, builder._href)
     .replace('//', '/');
 }
 
@@ -37,7 +37,7 @@ export default class {
   /** @namespace route.breadCrumbTitle */
 
   constructor(params = {}) {
-    this._uri = '';
+    this._href = '';
     this._params = params;
     this._crumbs = [];
   }
@@ -47,12 +47,12 @@ export default class {
     invariant(route, messages.invalidRoute);
     invariant(route.breadCrumbTitle || route.name, messages.routeNameMissing);
 
-    this._uri = makeUri(this, route);
+    this._href = makeUri(this, route);
 
     this._crumbs.push({
       name: route.breadCrumbTitle || route.name,
       icon: route.icon,
-      uri: this._uri
+      href: this._href
     });
 
     return this;
