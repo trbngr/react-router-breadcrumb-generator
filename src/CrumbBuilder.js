@@ -43,11 +43,9 @@ export default class {
   }
 
   buildCrumb(route) {
-    if (!route)
-      throw new Error(messages.invalidRoute);
 
-    if (!route.breadCrumbTitle && !route.name)
-      throw new Error(messages.routeNameMissing);
+    invariant(route, messages.invalidRoute);
+    invariant(route.breadCrumbTitle || route.name, messages.routeNameMissing);
 
     this._uri = makeUri(this, route);
 
