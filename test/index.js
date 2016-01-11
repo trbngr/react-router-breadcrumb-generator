@@ -62,12 +62,12 @@ describe('CrumbBuilder', () => {
       buildCrumb.should.throw(messages.invalidRoute);
     });
 
-    it('should throw when route path is missing.', () => {
+    it('should not throw when route path is missing.', () => {
 
       var builder = new CrumbBuilder({param: '1', target: ''});
-      var buildCrumb = () => builder.buildCrumb({name: ''});
+      var buildCrumb = () => builder.buildCrumb({name: 'home'});
 
-      buildCrumb.should.throw(messages.routePathMissing);
+      buildCrumb.should.not.throw();
     });
 
     it('should throw when route breadCrumbTitle and name are missing.', () => {
@@ -81,12 +81,23 @@ describe('CrumbBuilder', () => {
     it('should build and collect a breadcrumb from a route.', () => {
 
       var builder = new CrumbBuilder({param: '1', target: '123'});
-      builder.buildCrumb({breadCrumbTitle: 'HOME', path: '/cat/:param/widget/:target', icon: 'home'});
+      builder.buildCrumb({breadCrumbTitle: 'View Widget', path: '/cat/:param/widget/:target', icon: 'widget'});
 
       builder.crumbs.should.be.an.instanceof(Array);
       builder.crumbs.should.have.length(1);
 
-      assertCrumb(builder.crumbs[0], 'HOME', '/cat/1/widget/123', 'home');
+      assertCrumb(builder.crumbs[0], 'View Widget', '/cat/1/widget/123', 'widget');
+    });
+
+    it('will build and collect a breadcrumb from the root route. (eg. {path: \'\'})', () => {
+
+      var builder = new CrumbBuilder({param: '1', target: '123'});
+      builder.buildCrumb({breadCrumbTitle: 'HOME', path: '', icon: 'home'});
+
+      builder.crumbs.should.be.an.instanceof(Array);
+      builder.crumbs.should.have.length(1);
+
+      assertCrumb(builder.crumbs[0], 'HOME', '/', 'home');
     });
 
   });

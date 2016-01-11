@@ -6,7 +6,7 @@ const parameterMatcher = /:(.+)/;
 function makeUri(builder, route) {
   return (route.path || '')
     .split('/')
-    .reduce((uri, part) => `${uri}/${transformRoutePart(builder, part)}`, builder.uri)
+    .reduce((uri, part) => `${uri}/${transformRoutePart(builder, part)}`, builder._uri)
     .replace('//', '/');
 }
 
@@ -18,7 +18,7 @@ function transformRoutePart(builder, part) {
     return part;
   }
 
-  var params = builder.params;
+  var params = builder._params;
 
   const paramName = match[1];
 
@@ -46,9 +46,6 @@ export default class {
     if (!route)
       throw new Error(messages.invalidRoute);
 
-    if (!route.path)
-      throw new Error(messages.routePathMissing);
-
     if (!route.breadCrumbTitle && !route.name)
       throw new Error(messages.routeNameMissing);
 
@@ -61,14 +58,6 @@ export default class {
     });
 
     return this;
-  }
-
-  get params(){
-    return this._params;
-  }
-
-  get uri(){
-    return this._uri;
   }
 
   get crumbs() {

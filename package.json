@@ -1,6 +1,6 @@
 {
   "name": "react-router-breadcrumb-generator",
-  "version": "1.0.6",
+  "version": "1.0.8",
   "description": "Creates breadcrumb objects from the current route. This library doesn't not render anything. It simply returns objects that you can render yourself.",
   "main": "lib/index.js",
   "scripts": {
