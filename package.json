@@ -7,7 +7,7 @@
     "prebuild": "rimraf lib/",
     "build": "babel src/ --out-dir lib",
     "test": "mocha --require babel-register",
-    "prepublish": "npm version patch && npm run build"
+    "prepublish": "npm version patch && git push"
   },
   "keywords": [
     "react-router",
