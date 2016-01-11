@@ -1,7 +1,7 @@
 # react-router Breadcrumb Generator
 Creates breadcrumb objects from the current route. 
 
-This library doesn't not render anything. It simply returns objects that you can render yourself.
+This library does not render anything. It simply returns objects that you can render yourself.
 
 #Installation
 `npm i --save react-router-breadcrumb-generator`
